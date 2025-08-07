@@ -50,77 +50,65 @@ function Gsap() {
   const [isManualScroll, setIsManualScroll] = useState(false);
   const headingRef = useRef(null);
 
-  useEffect(() => {
-    const sections = gsap.utils.toArray(".video-section");
-    
-    // Animate heading text from center to top
-    gsap.to(headingRef.current, {
-      y: -200, // Move up by 200px
-      opacity: 0.8, // Slightly fade out
-      scrollTrigger: {
-        trigger: rightSectionRef.current,
-        start: "top top",
-        end: "top+=300 top",
-        scrub: 1,
-      }
-    });
+ useEffect(() => {
+  const sections = gsap.utils.toArray(".video-section");
 
-    // Set up scroll trigger for sections
-    ScrollTrigger.create({
+  gsap.to(headingRef.current, {
+    y: -200,
+    opacity: 0.8,
+    scrollTrigger: {
       trigger: rightSectionRef.current,
       start: "top top",
-      end: "+=200%",
-      pin: true,
-      pinSpacing: false,
+      end: "+=100%", // reduce from 200% to prevent extra space
       scrub: 1,
-      onUpdate: (self) => {
-        if (!isManualScroll) {
-          const progress = self.progress;
-          setActiveSection(progress < 0.5 ? 0 : 1);
-        }
-      },
-      onLeave: () => setIsManualScroll(false),
-      onLeaveBack: () => setIsManualScroll(false)
-    });
+    },
+  });
 
-    // Animate vertical line fill (50% by default)
-    gsap.to(verticalLineRef.current, {
-      background: activeSection === 0 
-        ? 'linear-gradient(to bottom, #facc15 50%, #3f3f46 50%)' 
-        : 'linear-gradient(to bottom, #facc15 100%, #3f3f46 100%)',
-      duration: 0.5,
-      ease: 'power2.inOut'
-    });
-
-    // Animate sections
-    gsap.to(sections, {
-      yPercent: -100 * (sections.length - 1),
-      ease: "none",
-      scrollTrigger: {
-        trigger: rightSectionRef.current,
-        start: "top top",
-        end: "+=200%",
-        scrub: 1
+  ScrollTrigger.create({
+    trigger: rightSectionRef.current,
+    start: "top top",
+    end: "+=100%", // shrink scroll trigger duration
+    pin: true,
+    scrub: 1,
+    pinSpacing: false, // ensures no extra space is added below
+    onUpdate: (self) => {
+      if (!isManualScroll) {
+        const progress = self.progress;
+        setActiveSection(progress < 0.5 ? 0 : 1);
       }
-    });
+    },
+    onLeave: () => setIsManualScroll(false),
+    onLeaveBack: () => setIsManualScroll(false),
+  });
 
-    // Handle video playback
-    videoRefs.current.forEach((video, index) => {
-      if (video) {
-        ScrollTrigger.create({
-          trigger: rightSectionRef.current,
-          start: `${index * 100}%`,
-          end: `${(index + 1) * 100}%`,
-          onEnter: () => video.play(),
-          onEnterBack: () => video.play(),
-          onLeave: () => video.pause(),
-          onLeaveBack: () => video.pause()
-        });
-      }
-    });
+  gsap.to(sections, {
+    yPercent: -100 * (sections.length - 1),
+    ease: "none",
+    scrollTrigger: {
+      trigger: rightSectionRef.current,
+      start: "top top",
+      end: "+=100%", // must match the above
+      scrub: 1,
+    },
+  });
 
-    return () => ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-  }, [activeSection, isManualScroll]);
+  videoRefs.current.forEach((video, index) => {
+    if (video) {
+      ScrollTrigger.create({
+        trigger: video,
+        start: "top center",
+        end: "bottom center",
+        onEnter: () => video.play(),
+        onEnterBack: () => video.play(),
+        onLeave: () => video.pause(),
+        onLeaveBack: () => video.pause(),
+      });
+    }
+  });
+
+  return () => ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+}, [activeSection, isManualScroll]);
+
 
   const handleVideoChange = (type, videoKey) => {
     setActiveVideo(prev => ({
@@ -159,7 +147,7 @@ function Gsap() {
       {/* Animated heading section */}
       <div 
         ref={headingRef}
-        className=' w-full  relative pointer-events-none z-30'
+        className=' flex w-full  relative pointer-events-none z-30'
         style={{ willChange: 'transform, opacity' }}
       >
         <div className='absolute w-full flex flex-col justify-center items-center top-40'>
