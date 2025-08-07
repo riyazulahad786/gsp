@@ -19,7 +19,7 @@ function Footer() {
 
                 </div>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 py-5 lg:grid-cols-4 gap-4'>
+                <div className='grid grid-cols-2 md:grid-cols-2 py-5 lg:grid-cols-4 gap-4'>
                     <div>
                         <p className="py-3 font-manrope font-bold uppercase text-base tracking-wider leading-none">
                             Applications

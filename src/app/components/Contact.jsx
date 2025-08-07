@@ -24,10 +24,10 @@ function Contact() {
 
     return (
         <div className="min-h-screen bg-[#006abc]">
-            <div className="container mx-auto px-4 py-8 min-h-screen flex items-center">
+            <div className="container mx-auto px-1 py-8 min-h-screen flex items-center">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-6xl mx-auto">
                     {/* Left Section - Contact Info */}
-                    <div className="text-white space-y-8 flex flex-col justify-center px-6">
+                    <div className="text-white space-y-8 flex flex-col justify-center px-3">
                         <div>
                             <h1 className="text-4xl lg:text-5xl font-light mb-2">Get in touch</h1>
                             <div className="w-12 h-px bg-white mb-8"></div>
@@ -54,7 +54,7 @@ function Contact() {
                     </div>
 
                     {/* Right Section - Contact Form */}
-                    <div className="flex flex-col justify-center px-6">
+                    <div className="flex flex-col justify-center px-3">
                         <div className="space-y-8">
                             <div>
                                 <input
