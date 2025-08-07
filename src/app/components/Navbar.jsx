@@ -57,7 +57,7 @@ function Navbar() {
 
             <motion.a href="#" whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.9 }}>
               <Image
-                src="/assets/bxl-linkedin.svg.png"
+                src="/bxl-linkedin.svg.png"
                 width={24}
                 height={24}
                 alt="LinkedIn"
@@ -71,7 +71,7 @@ function Navbar() {
                 onClick={toggleLanguageMenu}
                 whileHover={{ scale: 1.05 }}
               >
-                <Image src="/assets/translate.png" width={20} height={20} alt="Translate" />
+                <Image src="/translate.png" width={20} height={20} alt="Translate" />
                 <span>{activeLanguage}</span>
                 <motion.span animate={{ rotate: isLanguageMenuOpen ? 180 : 0 }}>▼</motion.span>
               </motion.button>
